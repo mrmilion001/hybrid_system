@@ -1,0 +1,165 @@
+{% extends "admin/base_site.html" %}
+
+{% block content %}
+<style>
+    .admin-landing-wrapper {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0;
+    }
+    .main-container {
+        background: #ffffff;
+        width: 100%;
+        max-width: 640px;
+        border-radius: 16px;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        padding: 32px;
+        box-sizing: border-box;
+        border: 1px solid #e6e3da;
+    }
+    .header {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        margin-bottom: 28px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eeebe4;
+    }
+    .icon-box {
+        background: #fdf6ec;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .header-text h1 {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0 0 4px 0;
+        color: #111;
+    }
+    .header-text p {
+        font-size: 13px;
+        color: #666;
+        margin: 0;
+    }
+    .section-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: #777;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 12px;
+    }
+    .card-link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+        background: #fff;
+        border: 1.5px solid #e2ded4;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 12px;
+        transition: all 0.2s ease;
+    }
+    .card-link:hover {
+        border-color: #b5a895;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .card-content {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+    .card-icon {
+        background: #fdf6ec;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    .card-text h3 {
+        font-size: 15px;
+        font-weight: 600;
+        margin: 0 0 2px 0;
+        color: #1a1a1a;
+    }
+    .card-text p {
+        font-size: 13px;
+        color: #666;
+        margin: 0;
+    }
+    .arrow {
+        margin-left: auto;
+        color: #999;
+        font-weight: 600;
+    }
+    .back-portal {
+        display: inline-block;
+        margin-top: 20px;
+        font-size: 13px;
+        color: #2563eb;
+        text-decoration: none;
+        font-weight: 500;
+    }
+    .back-portal:hover {
+        text-decoration: underline;
+    }
+    /* Hide default django sidebar/dashboard clutter if desired */
+    #content-main { width: 100% !important; }
+</style>
+
+<div class="admin-landing-wrapper">
+    <div class="main-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </div>
+            <div class="header-text">
+                <h1>Administrative Dashboard</h1>
+                <p>Manage knowledge base, rules, and system records</p>
+            </div>
+        </div>
+
+        <!-- Management Cards -->
+        <div class="section-title">Knowledge Base & Rules</div>
+
+        <a href="{% url 'admin:advisory_policyclause_changelist' %}" class="card-link">
+            <div class="card-content">
+                <div class="card-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <div class="card-text">
+                    <h3>Policy Clauses</h3>
+                    <p>Add, edit, or configure regulatory provisions and keywords</p>
+                </div>
+                <div class="arrow">›</div>
+            </div>
+        </a>
+
+        <a href="{% url 'admin:advisory_rule_changelist' %}" class="card-link">
+            <div class="card-content">
+                <div class="card-icon">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                </div>
+                <div class="card-text">
+                    <h3>System Rules</h3>
+                    <p>Manage conditional logic, actions, and evaluation parameters</p>
+                </div>
+                <div class="arrow">›</div>
+            </div>
+        </a>
+
+        <a href="/advisory/" class="back-portal">← Back to System Landing Page</a>
+    </div>
+</div>
+
+{% endblock %}

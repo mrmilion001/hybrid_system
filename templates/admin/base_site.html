@@ -1,0 +1,35 @@
+{% extends "admin/base.html" %}
+
+{% block title %}UNIZIK Regulatory Admin Dashboard{% endblock %}
+
+{% block branding %}
+<!-- Clears out the default Django administration title text -->
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    /* Hide default Django top header bar and breadcrumbs */
+    #header {
+        display: none !important;
+    }
+    .breadcrumbs {
+        display: none !important;
+    }
+    body {
+        background-color: #F7F5F0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    #container {
+        background: transparent !important;
+    }
+    #content {
+        padding: 40px 20px !important;
+        margin: 0 auto !important;
+        max-width: 700px !important;
+    }
+</style>
+{% endblock %}

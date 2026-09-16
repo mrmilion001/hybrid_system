@@ -1,0 +1,45 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | UNIZIK Admin Dashboard{% endblock %}
+
+{% block branding %}
+<div id="site-name">
+    <a href="{% url 'admin:index' %}" style="color: #fff; font-weight: 600; text-decoration: none; font-size: 16px;">
+        UNIZIK Regulatory Admin Dashboard
+    </a>
+</div>
+{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<style>
+    :root {
+        --primary-color: #1d4ed8;
+        --secondary-color: #d97706;
+    }
+    #header {
+        background: #111827 !important;
+        color: #fff;
+        padding: 10px 20px;
+    }
+    #header a:link, #header a:visited {
+        color: #fff;
+    }
+    .button, input[type=submit], input[type=button], .submit-row input {
+        background: var(--primary-color) !important;
+        border-radius: 6px !important;
+        border: none !important;
+    }
+    .button.default, input[type=submit].default {
+        background: #1d4ed8 !important;
+    }
+    body {
+        background-color: #F7F5F0 !important;
+    }
+    .module {
+        border-radius: 8px !important;
+        border: 1px solid #e5e7eb !important;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04) !important;
+    }
+</style>
+{% endblock %}

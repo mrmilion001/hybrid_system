@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Advisory Portal - UNIZIK Regulatory Advisory System</title>
+    <style>
+        body {
+            background-color: #F7F5F0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            color: #1a1a1a;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .main-container {
+            background: #ffffff;
+            width: 100%;
+            max-width: 680px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            padding: 32px;
+            box-sizing: border-box;
+            border: 1px solid #e6e3da;
+        }
+        .header {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 24px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eeebe4;
+        }
+        .icon-box {
+            background: #eff6ff;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .header-text h1 {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            color: #111;
+        }
+        .header-text p {
+            font-size: 13px;
+            color: #666;
+            margin: 0;
+        }
+        .input-section {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 14px;
+            border: 1.5px solid #e2ded4;
+            border-radius: 10px;
+            resize: vertical;
+            font-size: 14px;
+            box-sizing: border-box;
+            background: #fff;
+            color: #1a1a1a;
+            transition: border-color 0.2s ease;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #2563eb;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        button {
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s ease;
+        }
+        button:hover {
+            background-color: #1d4ed8;
+        }
+        .response-box {
+            margin-top: 24px;
+            padding: 20px;
+            background: #faf8f5;
+            border: 1px solid #e9e4dc;
+            border-left: 4px solid #2563eb;
+            border-radius: 10px;
+            display: none;
+        }
+        .response-box strong {
+            color: #111;
+        }
+        .response-box p {
+            margin: 8px 0 16px 0;
+            font-size: 14px;
+            line-height: 1.5;
+            color: #333;
+        }
+        .meta {
+            font-size: 12px;
+            color: #666;
+            border-top: 1px solid #e9e4dc;
+            padding-top: 12px;
+            line-height: 1.6;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 24px;
+            font-size: 13px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <!-- Header -->
+    <div class="header">
+        <div class="icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <div class="header-text">
+            <h1>Student Advisory Portal</h1>
+            <p>Ask a regulatory question and get guidance with source references</p>
+        </div>
+    </div>
+
+    <!-- Input Form -->
+    <div class="input-section">
+        <label for="queryInput">Regulatory Inquiry</label>
+        <textarea id="queryInput" placeholder="e.g., What is the penalty for late course registration?"></textarea>
+        <button onclick="submitQuery()">Get Advisory Response</button>
+    </div>
+
+    <!-- Response Display Card -->
+    <div id="responseContainer" class="response-box">
+        <strong>Advisory Guidance:</strong>
+        <p id="messageOutput"></p>
+        <div class="meta">
+            <strong>Sources:</strong> <span id="sourcesOutput"></span><br>
+            <strong>Review Required:</strong> <span id="reviewOutput"></span><br>
+            <strong>Matched Rules:</strong> <span id="rulesOutput">None</span>
+        </div>
+    </div>
+
+    <a href="/advisory/" class="back-link">← Back to System Landing Page</a>
+</div>
+
+<script>
+async function submitQuery() {
+    const query = document.getElementById('queryInput').value.trim();
+    if (!query) return alert("Please enter a query.");
+
+    const responseContainer = document.getElementById('responseContainer');
+    document.getElementById('messageOutput').innerText = "Processing query through rule engine...";
+    responseContainer.style.display = 'block';
+
+    try {
+        const res = await fetch('/api/query/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: query })
+        });
+        
+        const data = await res.json();
+        
+        if (res.ok) {
+            document.getElementById('messageOutput').innerText = data.message;
+            document.getElementById('sourcesOutput').innerText = data.sources ? data.sources.join(', ') : 'None';
+            document.getElementById('reviewOutput').innerText = data.requires_human_review ? "Yes (Referred to Committee)" : "No (Automated Resolution)";
+            
+            // Flexible rule extraction supporting multiple response structures
+            const rules = data.matched_rules || (data.metadata && data.metadata.matched_rules) || [];
+            const ruleNames = rules.map(r => typeof r === 'object' ? (r.name || r.rule_id) : r);
+            
+            document.getElementById('rulesOutput').innerText = ruleNames.length > 0 ? ruleNames.join(', ') : 'None';
+        } else {
+            document.getElementById('messageOutput').innerText = "Error: " + (data.error || "Unknown error occurred.");
+        }
+    } catch (err) {
+        document.getElementById('messageOutput').innerText = "Network error: Could not reach advisory API.";
+    }
+}
+</script>
+
+</body>
+</html>
