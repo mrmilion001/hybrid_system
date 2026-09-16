@@ -131,6 +131,7 @@ ALLOWED_HOSTS = os.environ.get(
     'ALLOWED_HOSTS',
     '127.0.0.1,localhost,testserver'
 ).split(',')
+print("RAILWAY ALLOWED_HOSTS:", ALLOWED_HOSTS)
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
